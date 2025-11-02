@@ -1,0 +1,1 @@
+Script do jogo chamado Força G, desenvolvido na Unity, que simula o sistema solar, com escalas de massa e distância proporcionais à realidade, bem como também o emprego de órbitas elípticas no sistema planetário.
