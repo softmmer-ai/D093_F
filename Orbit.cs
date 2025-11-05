@@ -2,15 +2,15 @@
 
 public class Orbit : MonoBehaviour
 {
-    //real value of gravitational constant is 6.67408 × 10-11
-    //can increase to make thing go faster instead of increase timestep of Unity
+    // O valor real da constante gravitacional é 6.67408 × 10^-11.
+    // Aqui usamos um valor maior para deixar as coisas mais rápidas, em vez de aumentar o timestep do Unity.
     readonly float G = 1000f;
     GameObject[] celestials;
 
     [SerializeField]
     bool IsElipticalOrbit = false;
 
-    // Start is called before the first frame update
+    // Start é chamado antes da primeira atualização do frame
     void Start()
     {
         celestials = GameObject.FindGameObjectsWithTag("Celestial");
@@ -18,7 +18,7 @@ public class Orbit : MonoBehaviour
         SetInitialVelocity();
     }
 
-    // Update is called once per frame
+    // FixedUpdate é chamado em intervalos fixos de tempo
     void FixedUpdate()
     {
         Gravity();
@@ -39,14 +39,15 @@ public class Orbit : MonoBehaviour
 
                     if (IsElipticalOrbit)
                     {
-                        // Eliptic orbit = G * M  ( 2 / r + 1 / a) where G is the gravitational constant, M is the mass of the central object, r is the distance between the two bodies
-                        // and a is the length of the semi major axis (!!! NOT GAMEOBJECT a !!!)
+                        // Órbita elíptica: G * M * (2 / r + 1 / a),
+                        // onde G é a constante gravitacional, M é a massa do corpo central, r é a distância entre os corpos
+                        // e a é o semi-eixo maior (não é o GameObject a).
                         a.GetComponent<Rigidbody>().linearVelocity += a.transform.right * Mathf.Sqrt((G * m2) * ((2 / r) - (1 / (r * 1.5f))));
                     }
                     else
                     {
-                        //Circular Orbit = ((G * M) / r)^0.5, where G = gravitational constant, M is the mass of the central object and r is the distance between the two objects
-                        //We ignore the mass of the orbiting object when the orbiting object's mass is negligible, like the mass of the earth vs. mass of the sun
+                        // Órbita circular: velocidade = √((G * M) / r)
+                        // Ignoramos a massa do corpo em órbita se ela for desprezível em relação à do corpo central (ex: Terra vs Sol).
                         a.GetComponent<Rigidbody>().linearVelocity += a.transform.right * Mathf.Sqrt((G * m2) / r);
                     }
                 }
@@ -72,3 +73,4 @@ public class Orbit : MonoBehaviour
         }
     }
 }
+
